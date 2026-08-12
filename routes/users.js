@@ -1,7 +1,7 @@
 // routes/users.js
 const express = require("express");
 const router = express.Router();
-const db = require("../../app/config");
+const db = require("../config.js");
 const { Filter } = require("firebase-admin/firestore"); // Ambil kelas Filter dari subpath
 
 const GUEST_COLLECTION = "guestcollection";
