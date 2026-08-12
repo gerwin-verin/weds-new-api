@@ -70,7 +70,7 @@ router.post("/deleteGuest/:id", async (req, res) => {
   }
 });
 
-router.post("/getListGuest", async (req, res) => {
+router.get("/getListGuest", async (req, res) => {
   try {
     const response = await db.collection(GUEST_COLLECTION).get();
     let resArr = [];
