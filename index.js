@@ -2,8 +2,8 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
-const userRoutes = require("users");
-const rsvpRoutes = require("rsvp");
+const userRoutes = require("./users");
+const rsvpRoutes = require("./rsvp");
 const cors = require('cors');
 
 app.use(cors());
