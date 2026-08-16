@@ -122,9 +122,9 @@ router.get("/getGuest/", async (req, res) => {
           )
         )
       )
-      // .orderBy("name")
-      // .startAt(nameFilter)
-      // .endAt(nameFilter + "\uf8ff")
+      .orderBy("name")
+      .startAt(pageStart)
+      .limit(limitPage)
       .get();
 
     const guests = snapshot.docs.map((doc) => ({
