@@ -103,9 +103,14 @@ router.post("/getGuest/:id", async (req, res) => {
 router.get("/getGuest/", async (req, res) => {
   try {
     const nameFilter = req.body.namefilter;
-    const nohpFilter = req.body.nohpfilter;
-    const paxFilter = req.body.paxfilter;
-    const emailFilter = req.body.emailfilter;
+    const limitPage = req.body.limit;
+    var pageStart = req.body.pageStart;
+
+    if (pageStart = 1) {
+      pageStart = 0;
+    } else {
+      pageStart = pageStart * limitPage;
+    }
 
     const query = db.collection(GUEST_COLLECTION);
     const snapshot = await query
@@ -114,21 +119,11 @@ router.get("/getGuest/", async (req, res) => {
           Filter.and(
             Filter.where("name", ">=", nameFilter),
             Filter.where("name", "<=", nameFilter + "\uf8ff")
-          ),
-          // Filter.and(
-          //   Filter.where("email", ">=", emailFilter),
-          //   Filter.where("email", "<=", emailFilter + "\uf8ff")
-          // ),
-          Filter.and(
-            Filter.where("nohp", ">=", nohpFilter),
-            Filter.where("nohp", "<=", nohpFilter + "\uf8ff")
           )
-          // Filter.and(
-          //   Filter.where("pax", ">=", paxFilter),
-          //   Filter.where("pax", "<=", paxFilter + "\uf8ff")
-          // )
         )
       )
+      .orderBy("name")
+      .startAt(1).limit(limitPage)
       .get();
 
     const guests = snapshot.docs.map((doc) => ({
