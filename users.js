@@ -15,7 +15,7 @@ router.post("/insertGuest", async (req, res) => {
       nohp: req.body.nohp,
       pax: req.body.pax,
       type: req.body.type,
-      link: website + "?to=" + req.body.name.replace(/\s+/g, ""),
+      link: website + "?to=" + req.body.name.replace(/\s+/g, ''),
     };
     console.log("Guest : " + guest);
     const response = db.collection(GUEST_COLLECTION).add(guest);
@@ -42,7 +42,7 @@ router.post("/updateGuest", async (req, res) => {
         nohp: req.body.nohp,
         pax: req.body.pax,
         type: req.body.type,
-        link: website + "?to=" + req.body.name.replace(/\s+/g, ""),
+        link: website + "?to=" + req.body.name.replace(/\s+/g, ''),
       });
     return res
       .status(200)
@@ -106,7 +106,7 @@ router.get("/getGuest/", async (req, res) => {
     const limitPage = req.body.limit;
     var pageStart = req.body.pageStart;
 
-    if ((pageStart = 1)) {
+    if (pageStart = 1) {
       pageStart = 0;
     } else {
       pageStart = pageStart * limitPage;
@@ -116,8 +116,10 @@ router.get("/getGuest/", async (req, res) => {
     const snapshot = await query
       .where(
         Filter.or(
-          Filter.where("name", ">", nameFilter),
-          Filter.where("name", "<=", nameFilter + "\uf8ff")
+          Filter.and(
+            Filter.where("name", ">", nameFilter),
+            Filter.where("name", "<=", nameFilter + "\uf8ff")
+          )
         )
       )
       // .orderBy("name")
