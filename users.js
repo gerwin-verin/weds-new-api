@@ -117,7 +117,7 @@ router.get("/getGuest/", async (req, res) => {
       .where(
         Filter.or(
           Filter.where("name", ">", nameFilter),
-          Filter.where("name", "<=", nameFilter + "\uf8ff")
+          Filter.where("name", "<=", nameFilter)
         )
       )
       // .orderBy("name")
