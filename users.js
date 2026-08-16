@@ -114,17 +114,17 @@ router.get("/getGuest/", async (req, res) => {
 
     const query = db.collection(GUEST_COLLECTION);
     const snapshot = await query
-      // .where(
-      //   Filter.or(
-      //     Filter.and(
-      //       Filter.where("name", ">", nameFilter),
-      //       Filter.where("name", "<=", nameFilter + "\uf8ff")
-      //     )
-      //   )
-      // )
-      .orderBy("name")
-      .startAt(nameFilter)
-      .endAt(nameFilter + "\uf8ff")
+      .where(
+        Filter.or(
+          Filter.and(
+            Filter.where("name", ">", nameFilter),
+            Filter.where("name", "<=", nameFilter + "\uf8ff")
+          )
+        )
+      )
+      // .orderBy("name")
+      // .startAt(nameFilter)
+      // .endAt(nameFilter + "\uf8ff")
       .get();
 
     const guests = snapshot.docs.map((doc) => ({
