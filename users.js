@@ -104,7 +104,7 @@ router.post("/getGuestByName/:name", async (req, res) => {
   try {
     const guest = db.collection(GUEST_COLLECTION).where("name", "==", req.params.name);
     const response = await guest.get();
-    return res.status(200).json({ success: true, res: response });
+    return res.status(200).json({ success: true, res: response.docs[0].data() });
   } catch (err) {
     return res
       .status(500)
