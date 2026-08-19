@@ -100,9 +100,9 @@ router.post("/getGuest/:id", async (req, res) => {
   }
 });
 
-router.post("/getGuestByLink/:link", async (req, res) => {
+router.post("/getGuestByLink/:name", async (req, res) => {
   try {
-    const guest = db.collection(GUEST_COLLECTION).doc(req.params.link);
+    const guest = db.collection(GUEST_COLLECTION).doc(req.params.name);
     const response = await guest.get();
     return res.status(200).json({ success: true, res: response.data() });
   } catch (err) {
