@@ -100,6 +100,18 @@ router.post("/getGuest/:id", async (req, res) => {
   }
 });
 
+router.post("/getGuestByLink/:link", async (req, res) => {
+  try {
+    const guest = db.collection(GUEST_COLLECTION).doc(req.params.link);
+    const response = await guest.get();
+    return res.status(200).json({ success: true, res: response.data() });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ success: false, msg: "Internal Server Error: " + err });
+  }
+});
+
 router.get("/getGuest/", async (req, res) => {
   try {
     const nameFilter = req.body.namefilter;
