@@ -102,9 +102,16 @@ router.post("/getGuest/:id", async (req, res) => {
 
 router.post("/getGuestByName/:name", async (req, res) => {
   try {
+    var result = [];
     const guest = db.collection(GUEST_COLLECTION).where("name", "==", req.params.name);
-    const response = await guest.get();
-    return res.status(200).json({ success: true, res: response.docs[0].data() });
+    var response = await guest.get();
+    response.forEach((doc) => {
+      result.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+    return res.status(200).json({ success: true, res: result });
   } catch (err) {
     return res
       .status(500)
